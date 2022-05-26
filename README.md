@@ -4,6 +4,6 @@ This is a fork of [Restcomm SCTP](https://github.com/RestComm/sctp). The fork wa
 > -XX:ActiveProcessorCount=<number of CPU cores> 
 
 # Build
-Build using 'mvn install'. Builds work fine on Windows WSL. You will need to install the libsctp package if not already installed.
+Build using 'mvn install'. You will need to install the libsctp package if not already installed.
 > sudo apt-get update -y,  sudo apt-get install -y libsctp-dev<br>
 > mvn install
