@@ -1,15 +1,9 @@
 
-[Try Restcomm Cloud NOW for FREE!](https://www.restcomm.com/sign-up/) Zero download and install required.
+# Overview
+This is a fork of [Restcomm SCTP](https://github.com/RestComm/sctp). The fork was created in order to fix a threading issue where only one thread was used to process all socket connections. This was a scaling bottleneck. The code has been updated to enable a thread per socket connection for both client and server applications. Number of threads are determined automatically based on the available CPU cores. This works for bare metal and VMs (including EC2) but does not work in container environments (e.g. ECS). For container environments you must specify the following JVM parameter on startup: 
+> -XX:ActiveProcessorCount=<number of CPU cores> 
 
-
-All Restcomm [docs](https://www.restcomm.com/docs/) and [downloads](https://www.restcomm.com/downloads/) are now available at [Restcomm.com](https://www.restcomm.com).
-
-# Restcomm SCTP
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2FRestComm%2Fsctp.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2FRestComm%2Fsctp?ref=badge_shield)
-
-
-RestComm SCTP implementation
-
-
-## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2FRestComm%2Fsctp.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2FRestComm%2Fsctp?ref=badge_large)
+# Build
+Build using 'mvn install'. Builds work fine on Windows WSL. You will need to install the libsctp package if not already installed.
+> sudo apt-get update -y,  sudo apt-get install -y libsctp-dev<br>
+> mvn install

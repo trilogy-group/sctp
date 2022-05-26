@@ -107,8 +107,8 @@ public class NettySctpManagementImpl implements Management {
     protected double[] congControl_DelayThreshold = new double[] { 2.5, 8, 14 };
     protected double[] congControl_BackToNormalDelayThreshold = new double[] { 1.5, 5.5, 10 };
 
-//    private int workerThreads = DEFAULT_IO_THREADS;
-//    private boolean singleThread = true;
+    private int workerThreads = DEFAULT_IO_THREADS;
+    private boolean singleThread = true;
 
     // private NettyClientOpsThread nettyClientOpsThread = null;
 
@@ -325,8 +325,8 @@ public class NettySctpManagementImpl implements Management {
 
             this.bossGroup = new NioEventLoopGroup(1, new DefaultThreadFactory("Sctp-BossGroup-" + this.name));
             // TODO: make a thread count for WorkerGroup configurable
-            this.workerGroup = new NioEventLoopGroup(0, new DefaultThreadFactory("Sctp-WorkerGroup-" + this.name));
-            this.clientExecutor = new ScheduledThreadPoolExecutor(1, new DefaultThreadFactory("Sctp-ClientExecutorGroup-"
+            this.workerGroup = new NioEventLoopGroup(workerThreads, new DefaultThreadFactory("Sctp-WorkerGroup-" + this.name));
+            this.clientExecutor = new ScheduledThreadPoolExecutor(workerThreads, new DefaultThreadFactory("Sctp-ClientExecutorGroup-"
                     + this.name));
 
             // this.nettyClientOpsThread = new NettyClientOpsThread(this);
@@ -1185,8 +1185,7 @@ public class NettySctpManagementImpl implements Management {
      */
     @Override
     public int getWorkerThreads() {
-        return 1;
-//        return this.workerThreads;
+        return this.workerThreads;
     }
 
     /*
@@ -1196,13 +1195,13 @@ public class NettySctpManagementImpl implements Management {
      */
     @Override
     public void setWorkerThreads(int workerThreads) throws Exception {
-//        if (this.started)
-//            throw new Exception("WorkerThreads parameter can be updated only when SCTP stack is NOT running");
-//
-//        if (workerThreads < 1) {
-//            workerThreads = DEFAULT_IO_THREADS;
-//        }
-//        this.workerThreads = workerThreads;
+       if (this.started)
+           throw new Exception("WorkerThreads parameter can be updated only when SCTP stack is NOT running");
+
+       if (workerThreads < 1) {
+           workerThreads = DEFAULT_IO_THREADS;
+       }
+       this.workerThreads = workerThreads;
     }
 
     /*
@@ -1212,8 +1211,7 @@ public class NettySctpManagementImpl implements Management {
      */
     @Override
     public boolean isSingleThread() {
-        return true;
-//        return this.singleThread;
+        return this.singleThread;
     }
 
     /*
@@ -1223,10 +1221,10 @@ public class NettySctpManagementImpl implements Management {
      */
     @Override
     public void setSingleThread(boolean singleThread) throws Exception {
-//        if (this.started)
-//            throw new Exception("SingleThread parameter can be updated only when SCTP stack is NOT running");
-//
-//        this.singleThread = singleThread;
+       if (this.started)
+           throw new Exception("SingleThread parameter can be updated only when SCTP stack is NOT running");
+
+       this.singleThread = singleThread;
 
     }
 

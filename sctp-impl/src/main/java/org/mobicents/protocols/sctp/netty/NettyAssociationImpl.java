@@ -616,7 +616,8 @@ public class NettyAssociationImpl implements Association {
         Bootstrap b;
         InetSocketAddress localAddress;
         try {
-            EventLoopGroup group = this.management.getBossGroup();
+            EventLoopGroup group = this.management.getWorkerGroup();
+
             b = new Bootstrap();
 
             b.group(group);
